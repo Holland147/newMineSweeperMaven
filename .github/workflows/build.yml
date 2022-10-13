@@ -16,7 +16,7 @@ jobs:
       - name: Set up JDK 19
         uses: actions/setup-java@v1
         with:
-          
+
           java-version: 19
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
@@ -34,4 +34,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Holland147_Minesweeper
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Holland147_newMavenMineSweeperMaven
