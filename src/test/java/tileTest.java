@@ -19,6 +19,8 @@ public class tileTest {
         testTile.setFlag();
         Assertions.assertEquals(true, testTile.getFlag(), "check if True");
 
+
+
     }
 
 

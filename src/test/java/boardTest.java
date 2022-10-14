@@ -10,5 +10,6 @@ public class boardTest {
         Assertions.assertEquals(15, testBoard.totalNumMines, "check if 15");
         Assertions.assertEquals(9, testBoard.grid.length, "Check length of array");
 
+
     }
 }

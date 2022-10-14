@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>board.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">newMavenMineSweeper</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">board.java</span></div><h1>board.java</h1><pre class="source lang-java linenums">import java.util.Random;
+import java.util.Scanner;
+
+public class board {
+    //attributes
+    Tile[][] grid;
+    int gridSize;
+    int totalNumMines;
+    int numOfFlags;
+
+    boolean win;
+
+<span class="fc" id="L13">    public static final Scanner scanner = new Scanner(System.in);</span>
+
+
+    //constructor
+<span class="fc" id="L17">    public board(int gridSize) {</span>
+<span class="fc" id="L18">        this.gridSize = gridSize;</span>
+<span class="fc" id="L19">        this.grid = new Tile[gridSize][gridSize];</span>
+<span class="fc" id="L20">        this.totalNumMines = 15;</span>
+<span class="fc" id="L21">        setTiles();</span>
+<span class="fc" id="L22">        setBombs();</span>
+        //set counters
+        //start game
+        //makeBoard();
+        //checkIfHitBomb();
+<span class="fc" id="L27">    }</span>
+
+    //method
+    public void makeBoard() {
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        for (int i = 0; i &lt; gridSize; i++) {</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">            for (int j = 0; j &lt; gridSize; j++) {</span>
+<span class="nc" id="L33">                System.out.print(grid[i][j].bombCounter);</span>
+            }
+<span class="nc" id="L35">            System.out.println(&quot;&quot;);</span>
+        }
+
+
+<span class="nc" id="L39">    }</span>
+
+    public void checkIfHitBomb() {
+<span class="nc" id="L42">        System.out.print(&quot;Enter the X and Y axis individually&quot;);</span>
+
+<span class="nc" id="L44">        int xValue = scanner.nextInt();</span>
+<span class="nc" id="L45">        int yValue = scanner.nextInt();</span>
+
+
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        if (grid[xValue][yValue].getBomb()) {</span>
+<span class="nc" id="L49">            win = false;</span>
+        } else {
+<span class="nc" id="L51">            win = true;</span>
+        }
+
+<span class="nc" id="L54">    }</span>
+
+
+
+
+    public boolean getWin(){
+<span class="nc" id="L60">        return win;</span>
+    }
+
+    public void setTiles(){
+
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        for(int i = 0; i&lt;gridSize; i++){</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">            for(int j = 0; j&lt;gridSize; j++){</span>
+<span class="fc" id="L67">                grid[i][j] = new Tile();</span>
+            }
+
+        }
+<span class="fc" id="L71">    }</span>
+
+    public void setBombs(){
+<span class="fc" id="L74">        Random random = new Random();</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        for(int i = 0; i &lt; totalNumMines; i++){</span>
+<span class="fc" id="L76">            int X = random.nextInt(gridSize);</span>
+<span class="fc" id="L77">            int Y = random.nextInt(gridSize);</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">            while (grid[X][Y].getBomb()){</span>
+<span class="nc" id="L79">                X = random.nextInt(gridSize);</span>
+<span class="nc" id="L80">                Y = random.nextInt(gridSize);</span>
+            }
+<span class="fc" id="L82">            grid[X][Y].setBomb();</span>
+<span class="fc" id="L83">            setNumOfNearbyBombs(X,Y);</span>
+        }
+<span class="fc" id="L85">    }</span>
+
+
+
+    public void setFlag(int flagX, int flagY){
+<span class="nc" id="L90">        grid[flagX][flagY].setFlag();</span>
+
+<span class="nc" id="L92">    }</span>
+
+    public void setNumOfNearbyBombs(int X, int Y) {
+
+<span class="fc" id="L96">        handleEdge(X - 1,Y - 1);</span>
+<span class="fc" id="L97">        handleEdge(X - 1, Y);</span>
+<span class="fc" id="L98">        handleEdge(X - 1, Y+1);</span>
+<span class="fc" id="L99">        handleEdge( X , Y+1);</span>
+<span class="fc" id="L100">        handleEdge(X, Y-1);</span>
+<span class="fc" id="L101">        handleEdge(X + 1, Y +1);</span>
+<span class="fc" id="L102">        handleEdge(X + 1, Y);</span>
+<span class="fc" id="L103">        handleEdge(X + 1, Y - 1);</span>
+
+
+
+<span class="fc" id="L107">    }</span>
+
+    private void handleEdge(int X, int Y){
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        if(X &lt; 0){</span>
+<span class="fc" id="L111">            return;</span>
+        }
+
+<span class="fc bfc" id="L114" title="All 2 branches covered.">        if(X &gt;= gridSize ){</span>
+<span class="fc" id="L115">            return;</span>
+        }
+
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        if(Y &gt;= gridSize){</span>
+<span class="fc" id="L119">            return;</span>
+        }
+<span class="fc bfc" id="L121" title="All 2 branches covered.">        if(Y &lt; 0){</span>
+<span class="fc" id="L122">            return;</span>
+        }
+<span class="fc" id="L124">        grid[X][Y].bombCounter++;</span>
+<span class="fc" id="L125">    }</span>
+
+
+
+    }
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
