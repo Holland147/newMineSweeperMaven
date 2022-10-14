@@ -17,13 +17,13 @@ public class board {
     public board(int gridSize) {
         this.gridSize = gridSize;
         this.grid = new Tile[gridSize][gridSize];
-        this.totalNumMines = 20;
+        this.totalNumMines = 15;
         setTiles();
         setBombs();
         //set counters
         //start game
-        makeBoard();
-        checkIfHitBomb();
+        //makeBoard();
+        //checkIfHitBomb();
     }
 
     //method
